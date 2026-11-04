@@ -1,0 +1,70 @@
+name: ci
+
+# Todo PR valida o repositório de temas (esquema fechado, contraste WCAG AA, assets) e audita os workflows. O job
+# `ci-ok` é o único que o ruleset da main exige. Nada aqui publica: o deploy é o pages.yml, depois de validar de novo.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  merge_group:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && format('ci-{0}', github.ref) || format('ci-{0}', github.run_id) }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Validação dos temas
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      packages: read # o validador vem do pacote @tudoemcodigo/theme no GitHub Packages
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+          scope: '@tudoemcodigo'
+      - run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+      - run: npm run verify
+
+  workflows:
+    name: Auditoria dos workflows (zizmor)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: pipx run 'zizmor==1.31.1' --min-severity low .
+
+  ci-ok:
+    name: ci-ok
+    if: always()
+    needs: [verify, workflows]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Todos os jobs terminaram em sucesso
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          for result in $RESULTS; do
+            if [ "$result" != "success" ]; then
+              echo "ci-ok falhou: resultados = $RESULTS"
+              exit 1
+            fi
+          done
+          echo "ci-ok: tudo verde ($RESULTS)"

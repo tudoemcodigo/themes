@@ -1,0 +1,32 @@
+# Um PR semanal com todas as atualizações minor/patch (uma execução de CI em vez de várias); major em PR separado.
+# Cooldown: espera alguns dias por versões recém-lançadas (mitiga pacote comprometido publicado e retirado em seguida).
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: 'deps'
+    groups:
+      npm:
+        patterns: ['*']
+        update-types: ['minor', 'patch']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: 'ci'
+    groups:
+      actions:
+        patterns: ['*']

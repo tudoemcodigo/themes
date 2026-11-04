@@ -1,0 +1,21 @@
+{
+  "contract": 1,
+  "themes": [
+    {
+      "id": "christmas-2026",
+      "from": "2026-12-01",
+      "to": "2026-12-26",
+      "tokens": {
+        "color-accent": { "light": "#b3001b", "dark": "#ff9aa6" },
+        "color-on-accent": { "light": "#ffffff", "dark": "#1a0004" },
+        "color-accent-subtle": { "light": "#fdecee", "dark": "#3a0f17" },
+        "shell-bg": { "light": "#0b3d2e", "dark": "#0f2a21" },
+        "shell-hover": { "light": "#124d3a", "dark": "#17382c" },
+        "shell-active": { "light": "#1a5d46", "dark": "#1f4a3a" },
+        "shell-border": { "light": "#2a6b53", "dark": "#2b5a49" },
+        "shell-accent": { "light": "#ffb3bd", "dark": "#ffb3bd" }
+      },
+      "animation": "snow"
+    }
+  ]
+}
