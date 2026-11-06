@@ -9,11 +9,13 @@
         "color-accent": { "light": "#b3001b", "dark": "#ff9aa6" },
         "color-on-accent": { "light": "#ffffff", "dark": "#1a0004" },
         "color-accent-subtle": { "light": "#fdecee", "dark": "#3a0f17" },
-        "shell-bg": { "light": "#0b3d2e", "dark": "#0f2a21" },
-        "shell-hover": { "light": "#124d3a", "dark": "#17382c" },
-        "shell-active": { "light": "#1a5d46", "dark": "#1f4a3a" },
-        "shell-border": { "light": "#2a6b53", "dark": "#2b5a49" },
-        "shell-accent": { "light": "#ffb3bd", "dark": "#ffb3bd" }
+        "shell-bg": { "light": "#f2f9f5", "dark": "#0b1f18" },
+        "shell-hover": { "light": "#e5f2ea", "dark": "#12291f" },
+        "shell-active": { "light": "#d3eadc", "dark": "#183a2c" },
+        "shell-border": { "light": "#c8e0d3", "dark": "#1f3a30" },
+        "shell-text": { "light": "#0f2e22", "dark": "#e8f1ec" },
+        "shell-text-muted": { "light": "#34574a", "dark": "#a8c0b4" },
+        "shell-accent": { "light": "#b3001b", "dark": "#ffb3bd" }
       },
       "animation": "snow"
     }
